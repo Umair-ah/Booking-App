@@ -1,0 +1,14 @@
+<div class="max-5-xl mx-auto pb-8 rounded shadow-xl border">
+    <div class="px-6 py-10 rounded-t-xl bg-gray-50">
+        <h1 class="text-3-xl font-extrabold text-center"><%= @user.name %>'s Booking Page</h1>
+        <p class="text-gray-600 text-center mt-2">Book your preferred time slot using the booking options below.</p>
+
+        <div class="grid grid-cols-3 px-8 pt-8 gap-6">
+            <% @user.booking_types.each do |booking_type| %>
+                <%= render "users/booking_type", booking_type: booking_type %>
+            <% end %>
+        </div>
+    
+    </div>
+
+</div>

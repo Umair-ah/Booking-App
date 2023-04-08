@@ -1,8 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :booking_types
-  resources :bookings
+  
     authenticate :user, lambda { |u| u.admin? } do
       mount Sidekiq::Web => '/sidekiq'
     end
@@ -13,6 +12,15 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: "home#dashboard", as: :authenticated_root
   end
+
+  resources :booking_types
+  resources :bookings
+
+  get ":booking_link", to: "users#show", as: :user
+
+
+
+
   root to: 'home#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

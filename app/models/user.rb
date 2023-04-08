@@ -8,5 +8,7 @@ class User < ApplicationRecord
 
   has_many :booking_types
 
+  validates :booking_link, presence: true
+
   # relationship model: user -> booking_types -> [booking1, booking2, booking3]
 end
