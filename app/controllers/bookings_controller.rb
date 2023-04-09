@@ -8,6 +8,7 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   def new
     @booking = Booking.new
+    @booking_type = BookingType.find_by(name: "60 min")
   end
 
   # GET /bookings/1/edit
