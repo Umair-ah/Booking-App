@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :booking_types
-  resources :bookings
+  resources :bookings, except: :index
 
   get ":booking_link", to: "users#show", as: :user
 

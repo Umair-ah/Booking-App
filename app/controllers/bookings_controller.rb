@@ -1,11 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[ show edit update destroy ]
 
-  # GET /bookings or /bookings.json
-  def index
-    @bookings = Booking.all
-  end
-
   # GET /bookings/1 or /bookings/1.json
   def show
   end
@@ -25,11 +20,11 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully created." }
-        format.json { render :show, status: :created, location: @booking }
+        format.html { redirect_to root_path, notice: "Booking was successfully created." }
+     
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+       
       end
     end
   end
@@ -38,11 +33,11 @@ class BookingsController < ApplicationController
   def update
     respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully updated." }
-        format.json { render :show, status: :ok, location: @booking }
+        format.html { redirect_to root_path, notice: "Booking was successfully updated." }
+     
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+       
       end
     end
   end
@@ -52,8 +47,8 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url, notice: "Booking was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to root_path, notice: "Booking was successfully destroyed." }
+     
     end
   end
 
@@ -65,6 +60,6 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:status, :first_name, :last_name, :email, :start_at, :end_at)
+      params.require(:booking).permit(:booking_type_id, :status, :name, :email, :start_at, :end_at, :notes)
     end
 end
