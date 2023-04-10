@@ -18,10 +18,13 @@ Rails.application.routes.draw do
 
   get ":booking_link", to: "users#show", as: :user
 
+  post "payment-intent", to: "bookings#intent"
 
   scope ':booking_link', as: :user do
     resources :bookings, only: [:index, :new]
   end
+
+  resources :webhooks, only: :create
 
 
 

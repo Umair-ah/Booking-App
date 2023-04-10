@@ -18,9 +18,18 @@ class BookingsController < ApplicationController
   # POST /bookings or /bookings.json
   def create
     @booking = Booking.new(booking_params)
+    @booking_type = BookingType.find(params[:booking][:booking_type_id])
 
     respond_to do |format|
+
+      
+
       if @booking.save
+
+        unless @booking_type.payment_required?
+          @booking.approved!
+        end
+
         format.html { redirect_to root_path, notice: "Booking was successfully created." }
      
       else
@@ -50,6 +59,27 @@ class BookingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Booking was successfully destroyed." }
      
+    end
+  end
+
+  def intent
+    @booking_type = BookingType.find(params[:_json])
+    amount = @booking_type.price
+
+    payment_intent = Stripe::PaymentIntent.create(
+      amount: amount,
+      currency: 'inr',
+      automatic_payment_methods: {
+        enabled: true
+      },
+      metadata: {
+        user_id: @booking_type.user.id,
+        booking_type_id: @booking_type.id
+      }
+    )
+
+    respond_to do |format|
+      format.json{ render json:{ clientSecret: payment_intent['client_secret']}}
     end
   end
 
