@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get ":booking_link", to: "users#show", as: :user
 
 
-  scope '/:booking_link', as: :user do
+  scope ':booking_link', as: :user do
     resources :bookings, only: [:index, :new]
   end
 
